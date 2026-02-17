@@ -1,5 +1,5 @@
 use ge_course_deepseek::config;
-use ge_course_deepseek::game;
+use ge_course_deepseek::game_state;
 use ge_course_deepseek::resources;
 use raylib::prelude::*;
 
@@ -9,7 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let screen_width = app_config.window.width as i32;
     let screen_height = app_config.window.height as i32;
 
-    let (mut rl, thread) = raylib::init()
+    let (mut rl, thread) = init()
         .size(screen_width, screen_height)
         .title(app_config.window.title.as_str())
         .build();
@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         &thread,
     )?;
 
-    let mut game_state = game::GameState::new(
+    let mut game_state = game_state::GameState::new(
         Vector2::new(
             (screen_width / 2 - 50) as f32,
             (screen_height / 2 - 50) as f32,
@@ -36,12 +36,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     while !rl.window_should_close() {
         let delta_time = rl.get_frame_time();
 
-        game_state.update(delta_time, &rl);
+        game_state.update(&rl, delta_time);
 
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::BLACK);
 
-        game_state.render(&mut d);
+        game_state.draw(&mut d);
     }
 
     Ok(())
