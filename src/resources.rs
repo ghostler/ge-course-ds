@@ -1,0 +1,33 @@
+use raylib::prelude::*;
+use std::collections::HashMap;
+
+pub struct TextureManager {
+    textures: HashMap<String, Texture2D>,
+}
+
+impl TextureManager {
+    pub fn new() -> Self {
+        Self {
+            textures: HashMap::new(),
+        }
+    }
+
+    pub fn load_texture(
+        &mut self,
+        texture_path: &str,
+        texture_name: &str,
+        rl: &mut RaylibHandle,
+        thread: &RaylibThread,
+    ) -> Result<&Texture2D, Box<dyn std::error::Error>> {
+        if self.textures.contains_key(texture_name) {
+            return Ok(self.textures.get(texture_name).unwrap());
+        }
+        let texture2d = rl.load_texture(thread, texture_path)?;
+        self.textures.insert(texture_name.to_string(), texture2d);
+        Ok(self.textures.get(texture_name).unwrap())
+    }
+
+    pub fn texture(&self, texture_name: &str) -> Option<&Texture2D> {
+        self.textures.get(texture_name)
+    }
+}
