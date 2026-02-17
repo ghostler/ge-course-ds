@@ -1,0 +1,12 @@
+[window]
+width = 1024
+height = 768
+title = "Game"
+
+[game]
+target_fps = 60
+
+[player]
+speed = 200.0
+acceleration = 1000.0
+friction = 0.95
