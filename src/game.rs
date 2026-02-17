@@ -60,10 +60,9 @@ impl GameState {
 
     pub fn render(&self, d: &mut RaylibDrawHandle) {
         if let Some(player_texture) = self.texture_manager.texture(PLAYER_TEXTURE_NAME) {
-            d.draw_texture(
+            d.draw_texture_v(
                 player_texture,
-                self.box_pos.x as i32,
-                self.box_pos.y as i32,
+                self.box_pos,
                 Color::WHITE,
             );
         } else {
