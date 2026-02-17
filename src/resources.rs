@@ -1,5 +1,6 @@
 use raylib::prelude::*;
 use std::collections::HashMap;
+use raylib::ffi::UnloadTexture;
 
 pub struct TextureManager {
     textures: HashMap<String, Texture2D>,
@@ -29,5 +30,13 @@ impl TextureManager {
 
     pub fn texture(&self, texture_name: &str) -> Option<&Texture2D> {
         self.textures.get(texture_name)
+    }
+}
+
+impl Drop for TextureManager {
+    fn drop(&mut self) {
+        for (_, texture) in self.textures.drain() {
+            unsafe { UnloadTexture(texture.unwrap()) };
+        }
     }
 }
