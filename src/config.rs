@@ -10,6 +10,7 @@ pub struct WindowConfig {
 #[derive(Debug, serde::Deserialize)]
 pub struct GameConfig {
     pub target_fps: u32,
+    pub show_fps: bool,
 }
 
 #[derive(Debug, Copy, Clone, serde::Deserialize)]

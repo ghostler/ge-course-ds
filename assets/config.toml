@@ -5,6 +5,7 @@ title = "Game"
 
 [game]
 target_fps = 60
+show_fps = true
 
 [player]
 speed = 200.0
