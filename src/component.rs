@@ -1,4 +1,4 @@
-use crate::resources::TextureManager;
+use crate::resource;
 use raylib::prelude::*;
 
 pub struct Transform {
@@ -40,7 +40,7 @@ impl Sprite {
     pub fn draw(
         &self,
         d: &mut RaylibDrawHandle,
-        texture_manager: &TextureManager,
+        texture_manager: &resource::TextureManager,
         position: &Vector2,
     ) {
         if let Some(texture) = texture_manager.texture(self.texture_name.as_str()) {

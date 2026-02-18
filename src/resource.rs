@@ -40,3 +40,21 @@ impl Drop for TextureManager {
         }
     }
 }
+
+pub struct Assets {
+    texture_manager: TextureManager
+}
+
+impl Assets {
+    pub fn new() -> Self {
+        Self { texture_manager: TextureManager::new() }
+    }
+
+    pub fn texture_manager(&self) -> &TextureManager {
+        &self.texture_manager
+    }
+
+    pub fn texture_manager_mut(&mut self) -> &mut TextureManager {
+        &mut self.texture_manager
+    }
+}
