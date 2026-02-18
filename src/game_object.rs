@@ -1,6 +1,6 @@
 use raylib::drawing::RaylibDrawHandle;
 use raylib::RaylibHandle;
-use crate::component;
+use crate::{component, context};
 use crate::resource::TextureManager;
 
 pub struct GameObject {
@@ -22,14 +22,14 @@ impl GameObject {
         }
     }
 
-    pub fn update(&mut self, rl: &RaylibHandle, delta_time: f32) {
+    pub fn update(&mut self, game_ctx: &context::GameCtx) {
         if let Some(ref mut player_controller) = self.player_controller {
             if let Some(ref mut transform) = self.transform {
-                player_controller.update(rl, transform, delta_time);
+                player_controller.update(game_ctx, transform);
             }
         }
         if let Some(ref mut transform) = self.transform {
-            transform.update(delta_time);
+            transform.update(game_ctx.delta_time());
         }
     }
 

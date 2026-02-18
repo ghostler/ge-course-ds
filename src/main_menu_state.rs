@@ -1,4 +1,4 @@
-use crate::{command, resource, state};
+use crate::{command, context, resource, state};
 use raylib::prelude::*;
 
 pub struct MainMenuState<F> {
@@ -17,10 +17,10 @@ impl<F> state::State for MainMenuState<F>
 where
     F: Fn() -> Box<dyn state::State>,
 {
-    fn update(&mut self, rl: &RaylibHandle, _: f32) -> command::StateTransition {
-        if rl.is_key_pressed(KeyboardKey::KEY_ENTER) {
+    fn update(&mut self, game_ctx: &context::GameCtx) -> command::StateTransition {
+        if game_ctx.rl().is_key_pressed(KeyboardKey::KEY_ENTER) {
             command::StateTransition::PushState((self.make_game_play_state)())
-        } else if rl.is_key_pressed(KeyboardKey::KEY_ESCAPE) {
+        } else if game_ctx.rl().is_key_pressed(KeyboardKey::KEY_ESCAPE) {
             command::StateTransition::PopState
         } else {
             command::StateTransition::NoTransition
