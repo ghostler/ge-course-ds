@@ -1,19 +1,19 @@
 use raylib::drawing::RaylibDrawHandle;
 use raylib::RaylibHandle;
-use crate::components;
-use crate::resources::TextureManager;
+use crate::component;
+use crate::resource::TextureManager;
 
 pub struct GameObject {
-    transform: Option<components::Transform>,
-    sprite: Option<components::Sprite>,
-    player_controller: Option<components::PlayerController>,
+    transform: Option<component::Transform>,
+    sprite: Option<component::Sprite>,
+    player_controller: Option<component::PlayerController>,
 }
 
 impl GameObject {
     pub fn new(
-        transform: Option<components::Transform>,
-        sprite: Option<components::Sprite>,
-        player_controller: Option<components::PlayerController>,
+        transform: Option<component::Transform>,
+        sprite: Option<component::Sprite>,
+        player_controller: Option<component::PlayerController>,
     ) -> Self {
         Self {
             transform,

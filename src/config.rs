@@ -12,7 +12,7 @@ pub struct GameConfig {
     pub target_fps: u32,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, Copy, Clone, serde::Deserialize)]
 pub struct PlayerConfig {
     pub speed: f32,
     pub acceleration: f32,
