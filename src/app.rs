@@ -13,7 +13,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         .build();
 
     rl.set_target_fps(app_config.game.target_fps);
-    rl.set_exit_key(None);
+    rl.set_exit_key(Some(KeyboardKey::KEY_F10));
 
     let input_config = crate::input::InputConfig::load("assets/input.toml")?;
     let input_map = crate::input::InputMap::new(input_config);
@@ -33,6 +33,8 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         || Box::new(pause_state::PauseState::new());
     let state_builder: Box<dyn Fn() -> Box<dyn state::State>> = Box::new(move || {
         Box::new(game_play_state::GamePlayState::new(
+            screen_width as f32,
+            screen_height as f32,
             player_config.clone(),
             pause_state_builder,
         ))
@@ -50,6 +52,10 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         d.clear_background(Color::BLACK);
 
         state_stack.draw(&mut d, &assets);
+
+        if app_config.game.show_fps {
+            d.draw_fps(10, 10);
+        }
     }
 
     Ok(())
