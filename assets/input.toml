@@ -1,0 +1,14 @@
+[actions.move_up]
+keys = ["W", "Up"]
+
+[actions.move_down]
+keys = ["S", "Down"]
+
+[actions.move_left]
+keys = ["A", "Left"]
+
+[actions.move_right]
+keys = ["D", "Right"]
+
+[actions.pause]
+keys = ["Escape", "Space"]

@@ -1,4 +1,4 @@
-use crate::{command, resource, state};
+use crate::{command, context, resource, state};
 use raylib::prelude::*;
 
 pub struct PauseState;
@@ -10,8 +10,8 @@ impl PauseState {
 }
 
 impl state::State for PauseState {
-    fn update(&mut self, rl: &RaylibHandle, _: f32) -> command::StateTransition {
-        if rl.is_key_pressed(KeyboardKey::KEY_ESCAPE) || rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
+    fn update(&mut self, game_ctx: &context::GameCtx) -> command::StateTransition {
+        if game_ctx.rl().is_key_pressed(KeyboardKey::KEY_ESCAPE) || game_ctx.rl().is_key_pressed(KeyboardKey::KEY_SPACE) {
             command::StateTransition::PopState
         } else {
             command::StateTransition::NoTransition

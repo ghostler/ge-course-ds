@@ -1,4 +1,4 @@
-use crate::game_object;
+use crate::{context, game_object};
 use crate::{command, component, config, resource, state};
 use raylib::prelude::*;
 
@@ -34,12 +34,12 @@ impl<F> state::State for GamePlayState<F>
 where
     F: Fn() -> Box<dyn state::State>,
 {
-    fn update(&mut self, rl: &RaylibHandle, delta_time: f32) -> command::StateTransition {
-        if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
+    fn update(&mut self, game_ctx: &context::GameCtx) -> command::StateTransition {
+        if game_ctx.action_pressed("pause") {
             return command::StateTransition::PushState((self.make_pause_state)());
         }
         for game_object in &mut self.game_objects {
-            game_object.update(rl, delta_time);
+            game_object.update(game_ctx);
         }
         command::StateTransition::NoTransition
     }

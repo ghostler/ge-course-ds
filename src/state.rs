@@ -1,9 +1,9 @@
-use crate::command;
+use crate::{command, context};
 use crate::resource;
 use raylib::prelude::*;
 
 pub trait State {
-    fn update(&mut self, rl: &RaylibHandle, delta_time: f32) -> command::StateTransition;
+    fn update(&mut self, game_ctx: &context::GameCtx) -> command::StateTransition;
 
     fn draw(&self, d: &mut RaylibDrawHandle, assets: &resource::Assets);
 
@@ -48,9 +48,9 @@ impl StateStack {
         }
     }
 
-    pub fn update(&mut self, rl: &RaylibHandle, delta_time: f32) {
+    pub fn update(&mut self, game_ctx: &context::GameCtx) {
         if let Some(current) = self.stack.last_mut() {
-            match current.update(rl, delta_time) {
+            match current.update(game_ctx) {
                 command::StateTransition::NoTransition => {}
                 command::StateTransition::PushState(new_state) => {
                     self.push(new_state);

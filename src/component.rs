@@ -1,4 +1,4 @@
-use crate::resource;
+use crate::{context, resource};
 use raylib::prelude::*;
 
 pub struct Transform {
@@ -58,19 +58,19 @@ impl PlayerController {
         Self { acceleration }
     }
 
-    pub fn update(&mut self, rl: &RaylibHandle, transform: &mut Transform, delta_time: f32) {
+    pub fn update(&mut self, game_ctx: &context::GameCtx, transform: &mut Transform) {
         let mut axis_x: f32 = 0.0;
         let mut axis_y: f32 = 0.0;
-        if rl.is_key_down(KeyboardKey::KEY_W) {
+        if game_ctx.action_active("move_up") {
             axis_y -= 1.0;
         }
-        if rl.is_key_down(KeyboardKey::KEY_S) {
+        if game_ctx.action_active("move_down") {
             axis_y += 1.0;
         }
-        if rl.is_key_down(KeyboardKey::KEY_A) {
+        if game_ctx.action_active("move_left") {
             axis_x -= 1.0;
         }
-        if rl.is_key_down(KeyboardKey::KEY_D) {
+        if game_ctx.action_active("move_right") {
             axis_x += 1.0;
         }
 
@@ -81,7 +81,7 @@ impl PlayerController {
             axis_y /= len;
         }
 
-        transform.velocity.x += axis_x * self.acceleration * delta_time;
-        transform.velocity.y += axis_y * self.acceleration * delta_time;
+        transform.velocity.x += axis_x * self.acceleration * game_ctx.delta_time();
+        transform.velocity.y += axis_y * self.acceleration * game_ctx.delta_time();
     }
 }
